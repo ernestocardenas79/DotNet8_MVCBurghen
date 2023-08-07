@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using dn8mvc.web.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<ApplicationContext>(
+    options => options.UseSqlServer(builder.Configuration["ConnectionStrings:Default"],
+    x=> x.MigrationsHistoryTable("__MigrationHistorytable", "blk"))
+    );
 
 var app = builder.Build();
 
